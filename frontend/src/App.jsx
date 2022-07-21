@@ -6,8 +6,16 @@ import Dashboard from "./components/Dashboard";
 import Home from "./components/Home";
 import ForgotPassword from "./components/ForgotPassword";
 import Profile from "./components/Profile";
+import { useEffect } from "react";
+import { todoFetch } from "./utils/fetch";
 
 function App() {
+  useEffect(() => {
+    todoFetch({
+      url: "/auth/",
+      method: "get",
+    });
+  }, []);
   return (
     <div className="App text-slate-900 flex flex-col w-screen min-h-screen">
       <Navbar />

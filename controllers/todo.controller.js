@@ -4,7 +4,7 @@ const createError = require("http-errors");
 class todoController {
   static getTodos = async (req, res, next) => {
     try {
-      const todos = await todo.getTodosByUser(req.user.payload);
+      const todos = await todo.getTodosByUser(req.user);
       res.status(200).json({
         status: "True",
         message: "Successfully fetched todos",
@@ -18,7 +18,7 @@ class todoController {
   static createTodo = async (req, res, next) => {
     const { data } = req.body;
     try {
-      const newTodo = await todo.createTodoByUser(data, req.user.payload);
+      const newTodo = await todo.createTodoByUser(data, req.user);
       res.status(200).json({
         status: "True",
         message: "Successfully created todo",
@@ -32,7 +32,7 @@ class todoController {
   static markTodoAsDone = async (req, res, next) => {
     const { todoId } = req.body;
     try {
-      const newTodo = await todo.markTodoAsDone(todoId, req.user.payload.id);
+      const newTodo = await todo.markTodoAsDone(todoId, req.user.id);
       res.status(200).json({
         status: "True",
         message: "Successfully updated todo",
@@ -46,7 +46,7 @@ class todoController {
   static deleteTodo = async (req, res, next) => {
     const { todoId } = req.body;
     try {
-      const delTodo = await todo.deleteTodo(todoId, req.user.payload.id);
+      const delTodo = await todo.deleteTodo(todoId, req.user.id);
       res.status(200).json({
         status: "True",
         message: "Successfully deleted todo",

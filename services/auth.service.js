@@ -23,35 +23,35 @@ class authService {
     });
   };
 
-  static login = async (data) => {
-    return passport.authenticate({
-      successRedirect: "/dashboard",
-      failureRedirect: "/login",
-    });
-    // const { email, password } = data;
-    // console.log({ email, password });
-    // const users = await prisma.user.findMany();
-    // console.log(users);
-    // const user = await prisma.user.findUnique({
-    //   where: {
-    //     email,
-    //   },
-    // });
+  // static login = async (data) => {
+  //   return passport.authenticate("local", {
+  //     successRedirect: "/dashboard",
+  //     failureRedirect: "/login",
+  //   });
+  // const { email, password } = data;
+  // console.log({ email, password });
+  // const users = await prisma.user.findMany();
+  // console.log(users);
+  // const user = await prisma.user.findUnique({
+  //   where: {
+  //     email,
+  //   },
+  // });
 
-    // if (!user) {
-    //   throw createError.NotFound("User not registered");
-    // }
+  // if (!user) {
+  //   throw createError.NotFound("User not registered");
+  // }
 
-    // const checkPassword = bcrypt.compareSync(password, user.password);
+  // const checkPassword = bcrypt.compareSync(password, user.password);
 
-    // if (!checkPassword) {
-    //   throw createError.Unauthorized("Email or password not valid");
-    // }
-    // delete user.password;
+  // if (!checkPassword) {
+  //   throw createError.Unauthorized("Email or password not valid");
+  // }
+  // delete user.password;
 
-    // const accessToken = await jwt.signAccessToken(user);
-    // return { ...user, accessToken };
-  };
+  // const accessToken = await jwt.signAccessToken(user);
+  // return { ...user, accessToken };
+  // };
 
   static updateName = async (username, userId) => {
     const updatedUser = await prisma.user.update({

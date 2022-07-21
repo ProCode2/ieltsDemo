@@ -1,11 +1,13 @@
 const auth = require("../services/auth.service");
 const createError = require("http-errors");
+const passport = require("passport");
 
 class authController {
   static getUser = async (req, res, next) => {
-    res.status(200).json({
+    delete req.user.password;
+    return res.status(200).json({
       status: true,
-      message: "User created successfully",
+      message: "User fetched successfully",
       data: req.user,
     });
   };
@@ -23,23 +25,29 @@ class authController {
     }
   };
 
-  static login = async (req, res, next) => {
-    try {
-      await auth.login(req.body);
-      res.status(200).json({
-        status: true,
-        message: "Account login successful",
-        data: {},
-      });
-    } catch (error) {
-      next(createError(error.message));
-    }
-  };
+  // static login = async (req, res, next) => {
+  //   try {
+  //     passport.authenticate("local", {
+  //       successRedirect: "/dashboard",
+  //       failureRedirect: "/login",
+  //     });
+  //     res.send("hey");
+  //     // console.log(req.body);
+  //     // await auth.login(req.body);
+  //     // res.status(200).json({
+  //     //   status: true,
+  //     //   message: "Account login successful",
+  //     //   data: {},
+  //     // });
+  //   } catch (error) {
+  //     next(createError(error.message));
+  //   }
+  // };
 
   static updateName = async (res, req, next) => {
     const { username } = req.body;
     try {
-      const data = await auth.updateName(username, req.payload.id);
+      const data = await auth.updateName(username, req.user.id);
       res.status(200).json({
         status: true,
         message: "Account name updated successful",
@@ -50,13 +58,13 @@ class authController {
     }
   };
 
-  static updatePassword = async (res, req, next) => {
+  static updatePassword = async (req, res, next) => {
     const { oldPassword, newPassword } = req.body;
     try {
       const data = await auth.updatePassword(
         oldPassword,
         newPassword,
-        req.payload.id
+        req.user.id
       );
       res.status(200).json({
         status: true,
